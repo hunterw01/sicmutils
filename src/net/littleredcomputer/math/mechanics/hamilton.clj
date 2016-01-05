@@ -69,3 +69,22 @@
   (fn [[t q p]]  ;; H-state
     (let [L #(Lagrangian (up t q %))]
       ((Legendre-transform L) p))))
+
+;; (defn Poisson-bracket
+;;   [f g]
+;;   (fn [x]
+;;     (let [fx (f x)
+;;           gx (g x)]
+;;       (if (or (structure? fx) (structure? gx))
+;;         (mapr (fn [af]
+;;                   (mapr (fn [ag]
+;;                             ((Poisson-bracket
+;;                               NB. component probably becomes argument to get-in
+;;                               (compose (apply component af) f)
+;;                               (compose (apply component ag) g))
+;;                              x))
+;;                           (structure->access-chains gx)))
+;;                 (structure->access-chains gx)))
+;;       ((- (* ((pd 1) f) ((pd 2) g))
+;;           (* ((pd 2) f) ((pd 1) g)))
+;;        x))))

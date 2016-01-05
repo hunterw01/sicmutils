@@ -202,6 +202,8 @@
     (is (= [4 5 6] (seq (down 4 5 6))))
     (is (= [(up 1 2) (up 3 4)] (seq (down (up 1 2) (up 3 4)))))
     (is (= [1 2 3 4] (flatten (down (up 1 2) (up 3 4))))))
+  (testing "assoc"
+    (is (= 'foo  (assoc (up 1 2 3) 1 4))))
   (testing "unflatten"
     (is (= (up (down 0 1) (down 2 3))
            (unflatten (range) (up (down 'x 'y) (down 'z 't)))))

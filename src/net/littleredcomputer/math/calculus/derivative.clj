@@ -329,30 +329,32 @@
 
 (defn- euclidean-structure
   [selectors f]
-  (letfn [(structural-derivative [g v]
-                                 (cond (struct/structure? v)
-                                       (struct/opposite v
-                                                        (map-indexed
-                                                          (fn [i v_i]
-                                                            (structural-derivative
-                                                              (fn [w]
-                                                                (g (struct/structure-assoc-in v [i] w)))
-                                                              v_i))
-                                                          v))
-                                       (or (g/numerical-quantity? v) (g/abstract-quantity? v))
-                                       ((derivative g) v)
-                                       :else
-                                       (throw (IllegalArgumentException. (str "bad structure " g v)))))
-          (a-euclidean-derivative [v]
-                                  (cond (struct/structure? v)
-                                        (structural-derivative
-                                          (fn [w]
-                                            (f (if (empty? selectors) w (struct/structure-assoc-in v selectors w))))
-                                          (get-in v selectors))
-                                        (empty? selectors)
-                                        ((derivative f) v)
-                                        :else
-                                        (throw (IllegalArgumentException. (str "Bad selectors " f selectors v)))))]
+  (letfn [(structural-derivative
+            [g v]
+            (cond (struct/structure? v)
+                  (struct/opposite v
+                                   (map-indexed
+                                     (fn [i v_i]
+                                       (structural-derivative
+                                         (fn [w]
+                                           (g (struct/structure-assoc-in v [i] w)))
+                                         v_i))
+                                     v))
+                  (or (g/numerical-quantity? v) (g/abstract-quantity? v))
+                  ((derivative g) v)
+                  :else
+                  (throw (IllegalArgumentException. (str "bad structure " g v)))))
+          (a-euclidean-derivative
+            [v]
+            (cond (struct/structure? v)
+                  (structural-derivative
+                    (fn [w]
+                      (f (if (empty? selectors) w (struct/structure-assoc-in v selectors w))))
+                    (get-in v selectors))
+                  (empty? selectors)
+                  ((derivative f) v)
+                  :else
+                  (throw (IllegalArgumentException. (str "Bad selectors " f selectors v)))))]
     a-euclidean-derivative))
 
 (defn- multivariate-derivative

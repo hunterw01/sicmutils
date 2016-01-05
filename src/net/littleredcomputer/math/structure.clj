@@ -17,7 +17,7 @@
 ;
 
 (ns net.littleredcomputer.math.structure
-  (:import (clojure.lang Sequential Seqable IFn ILookup AFn Counted PersistentVector))
+  (:import (clojure.lang Sequential Seqable IFn ILookup IPersistentCollection AFn Associative Counted PersistentVector))
   (:require [net.littleredcomputer.math
              [value :as v]
              [generic :as g]]))
@@ -45,10 +45,20 @@
           (= v (.v bs)))))
   (toString [_] (str (cons (orientation orientation->symbol) v)))
   Sequential
-  Counted
-  (count [_] (count v))
+  ;; Counted
+  ;; (count [_] (count v))
   Seqable
   (seq [_] (seq v))
+  IPersistentCollection
+  (count [_] (count v))
+  (cons [s _] s) ;; XXX
+  (empty [_] (Struct. orientation []))
+  (equiv [s t] (and (= orientation (.orientation t))
+                    (= v (.v t))))
+  Associative
+  ;; (containsKey [_ i] (< i (count v)))
+  ;; (entryAt [_ i] (v i))
+  (assoc [s k v] s)
   ILookup
   (valAt [_ key] (get v key))
   (valAt [_ key default] (get v key default))
@@ -112,12 +122,6 @@
             k0 (first keys)]
         (make (.orientation s)
               (assoc w k0 (structure-assoc-in (nth w k0) (next keys) value))))))
-
-;; (defn structure-get-in
-;;   "Like get-in, but for structures. See structure-assoc-in"
-;;   [^Struct s keys]
-;;   (if (empty? keys) s
-;;       (recur (-> s .v (get (first keys))) (next keys))))
 
 (defn- compatible-for-contraction?
   "True if s and t are equal in length but opposite in orientation"
@@ -302,6 +306,20 @@
                 [values' (same struct struct')])
               [(rest values) (first values)]))]
     (second (u values struct))))
+
+;; 1 ]=> (structure->access-chains (up (down 3 4) (down 4 5) (up (up 1 2) 4) 4 (up 7 9)))
+;; #|
+;; (up (down (0 0) (0 1)) (down (1 0) (1 1)) (up (up (2 0 0) (2 0 1)) (2 1)) (3) (up (4 0) (4 1)))
+;; |#
+
+;; (defn structure->access-chains
+;;   [struct]
+;;   (letfn [(u [chain struct]
+;;             (if (structure? struct)
+;;               ;; need some magic with map-indexed here
+;;               (let [chain' struct'])))]))
+
+;; also need:
 
 (defmethod g/add [::down ::down] [a b] (elementwise g/+ a b))
 (defmethod g/add [::up ::up] [a b] (elementwise g/+ a b))

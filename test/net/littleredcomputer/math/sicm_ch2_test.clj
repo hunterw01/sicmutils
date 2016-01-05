@@ -62,9 +62,6 @@
              (simplify ((M->omega-body Euler->M) Euler-state)))))))
 
 (deftest section-2.9
-  ;; this is almost what scmutils gives, except the first and third terms
-  ;; containing A φdot are reduced to sin^2 psi sin^2 theta, so that is
-  ;; a missing piece in our simplification. XXX
   (is (= '(+ (* (expt (cos ψ) 2) (expt (sin θ) 2) B φdot)
              (* (expt (sin θ) 2) (expt (sin ψ) 2) A φdot)
              (* (cos ψ) (sin θ) (sin ψ) A θdot)
@@ -77,9 +74,8 @@
          (simplify (determinant (((square (pd 2)) (T-rigid-body 'A 'B 'C)) Euler-state))))))
 
 ;; the output is too horrible to contemplate at this point
-;; (deftest section-2.9b-simplify
-;;   (let [state' (simplify ((rigid-sysder 'A 'B 'C) Euler-state))]
-;;     (pp/pprint state')))
+;;(deftest section-2.9b-simplify
+;;  (is (= 'foo (simplify ((rigid-sysder 'A 'B 'C) Euler-state)))))
 
 (deftest ^:long section-2.9b
   (let [relative-error (fn [value reference-value]
@@ -87,24 +83,24 @@
                            (throw (IllegalArgumentException. "zero reference value")))
                          (/ (- value reference-value) reference-value))
         points (atom [])
-        monitor-errors (fn [A B C L0 E0]
-                         (fn [t state]
-                           (let [L ((Euler-state->L-space A B C) state)
-                                 E ((T-rigid-body A B C) state)]
-                             (swap! points conj
-                                    [t
-                                     (relative-error (nth L 0) (nth L0 0))
-                                     (relative-error (nth L 1) (nth L0 1))
-                                     (relative-error (nth L 2) (nth L0 2))
-                                     (relative-error E E0)]))))
+
         A 1. B (Math/sqrt 2.) C 2. ;; moments of inertia
         state0 (up 0. (up 1. 0. 0.) (up 0.1 0.1 0.1)) ;; initial state
         L0 ((Euler-state->L-space A B C) state0)
-        E0 ((T-rigid-body A B C) state0)]
+        E0 ((T-rigid-body A B C) state0)
+        monitor-errors (fn [t state]
+                         (let [L ((Euler-state->L-space A B C) state)
+                               E ((T-rigid-body A B C) state)]
+                           (swap! points conj
+                                  [t
+                                   (relative-error (nth L 0) (nth L0 0))
+                                   (relative-error (nth L 1) (nth L0 1))
+                                   (relative-error (nth L 2) (nth L0 2))
+                                   (relative-error E E0)])))]
 
     ((evolve rigid-sysder A B C)
      state0
-     (monitor-errors A B C L0 E0)
+     monitor-errors
      0.1
      10.0
      1.0e-12
@@ -117,8 +113,6 @@
 
 
 (deftest section-2.10
-  ;; simplification is a little off here: missing the extraction of a common
-  ;; factor (cos θ), but it's still pretty good.
   (is (= '(/ (+ (* (expt (cos θ) 2) C (expt φdot 2))
                 (* (expt (sin θ) 2) A (expt φdot 2))
                 (* 2N (cos θ) C φdot ψdot)

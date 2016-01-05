@@ -55,3 +55,8 @@
            (simplify ((Lagrangian->Hamiltonian
                        (L-rectangular 'm V))
                       (up 't (up 'x 'y) (down 'p_x 'p_y))))))))
+
+(deftest section-3.2
+  (with-literal-functions [[F (up 0 (up 0 0) (down 0 0)) 0]
+                           [G (up 0 (up 0 0) (down 0 0)) 0]
+                           [H (up 0 (up 0 0) (down 0 0)) 0]]))
