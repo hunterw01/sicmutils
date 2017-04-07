@@ -68,7 +68,7 @@
                            (H1 'beta))
                         a-state))))
     (is (= '((/ (expt p_theta 2) (* 2 α))
-              0
+             0
               (/ (* α (expt β 2) (expt ε 2) (expt (sin theta) 2)) (* 2 (expt p_theta 2)))
               0
               0)
@@ -84,5 +84,4 @@
                       (* -1 (expt α 2) (expt β 2) (expt ε 2))
                       (* 2 (expt p_theta 4)))
                    (* 2 (expt p_theta 3))))
-           (simplify ((C 'α 'β 'ε 2) a-state))))
-    ))
+           (simplify ((C 'α 'β 'ε 2) a-state))))))

@@ -59,8 +59,8 @@
           dxdy (make-differential {[0 1] 1})
           dxdydz (make-differential {[0 1 2] 1})
           dx-plus-dy (make-differential {[0] 1 [1] 1})
-          dx-plus-dz (make-differential {[0] 1 [2] 1})
-          ]
+          dx-plus-dz (make-differential {[0] 1 [2] 1})]
+
       (is (= dx-plus-dy (dx+dy dx dy)))
       (is (= dx-plus-dy (dx+dy dy dx)))
       (is (= dx-plus-dz (dx+dy dx dz)))
@@ -254,8 +254,8 @@
     (is (= '(* -1 (sin x) (cos (cos x))) (simplify (odear 'x))))))
 
 (deftest exponentiation-and-composition
-  (let [ff (fn [x y z] (+ (* x x y) (* y y z)(* z z x)))
-        ]
+  (let [ff (fn [x y z] (+ (* x x y) (* y y z)(* z z x)))]
+
     (is (= '(down
              (down (* 2 y) (* 2 x) (* 2 z))
              (down (* 2 x) (* 2 z) (* 2 y))
@@ -328,7 +328,7 @@
   (let [f #(expt % 3)]
     (is (= '(+ (* (expt t 3) (cos t)) (* 3 (expt t 2) (sin t)))
            (simplify (((* D sin) f) 't))))
-    (is (= '(* 3 (expt t 2) (sin t) )
+    (is (= '(* 3 (expt t 2) (sin t))
            (simplify (((* sin D) f) 't))))))
 
 (deftest vector-calculus
@@ -463,23 +463,23 @@
 
 (deftest taylor
   (is (= '(+ (* 1/6 (expt dx 3) (((∂ 0) ((∂ 0) ((∂ 0) f))) (up x y)))
-               (* 1/6 (expt dx 2) dy (((∂ 0) ((∂ 0) ((∂ 1) f))) (up x y)))
-               (* 1/3 (expt dx 2) dy (((∂ 1) ((∂ 0) ((∂ 0) f))) (up x y)))
-               (* 1/3 dx (expt dy 2) (((∂ 1) ((∂ 0) ((∂ 1) f))) (up x y)))
-               (* 1/6 dx (expt dy 2) (((∂ 1) ((∂ 1) ((∂ 0) f))) (up x y)))
-               (* 1/6 (expt dy 3) (((∂ 1) ((∂ 1) ((∂ 1) f))) (up x y)))
-               (* 1/2 (expt dx 2) (((∂ 0) ((∂ 0) f)) (up x y)))
-               (* dx dy (((∂ 1) ((∂ 0) f)) (up x y)))
-               (* 1/2 (expt dy 2) (((∂ 1) ((∂ 1) f)) (up x y)))
-               (* dx (((∂ 0) f) (up x y)))
-               (* dy (((∂ 1) f) (up x y)))
-               (f (up x y)))
-           (simplify
-            (reduce +
-                    (take 4 (taylor-series-terms
-                                    (literal-function 'f (up 0 0) 0)
-                                    (up 'x 'y)
-                                    (up 'dx 'dy)))))))
+             (* 1/6 (expt dx 2) dy (((∂ 0) ((∂ 0) ((∂ 1) f))) (up x y)))
+             (* 1/3 (expt dx 2) dy (((∂ 1) ((∂ 0) ((∂ 0) f))) (up x y)))
+             (* 1/3 dx (expt dy 2) (((∂ 1) ((∂ 0) ((∂ 1) f))) (up x y)))
+             (* 1/6 dx (expt dy 2) (((∂ 1) ((∂ 1) ((∂ 0) f))) (up x y)))
+             (* 1/6 (expt dy 3) (((∂ 1) ((∂ 1) ((∂ 1) f))) (up x y)))
+             (* 1/2 (expt dx 2) (((∂ 0) ((∂ 0) f)) (up x y)))
+             (* dx dy (((∂ 1) ((∂ 0) f)) (up x y)))
+             (* 1/2 (expt dy 2) (((∂ 1) ((∂ 1) f)) (up x y)))
+             (* dx (((∂ 0) f) (up x y)))
+             (* dy (((∂ 1) f) (up x y)))
+             (f (up x y)))
+          (simplify
+           (reduce +
+                   (take 4 (taylor-series-terms
+                                   (literal-function 'f (up 0 0) 0)
+                                   (up 'x 'y)
+                                   (up 'dx 'dy)))))))
   (testing "eq. 5.291"
     (let [V (fn [[xi eta]] (sqrt (+ (square (+ xi 'R_0)) (square eta))))]
       (is (= '[R_0 xi (/ (expt eta 2) (* 2 R_0))]

@@ -31,8 +31,8 @@
     (is (= '(+ (* -1 a l m (expt ω 2) (cos (* t ω)) (sin (θ t))) (* g l m (sin (θ t))) (* (expt l 2) m (((expt D 2) θ) t)))
            (simplify (((Lagrange-equations
                          (driven/L 'm 'l 'g 'a 'ω))
-                        θ)
-                       't))))
+                       θ)
+                      't))))
     (let [o (atom [])
           observe (fn [t q] (swap! o conj [t q]))]
       (driven/evolver {:t 3/60 :dt 1/60 :observe observe})

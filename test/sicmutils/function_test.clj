@@ -43,12 +43,12 @@
 (deftest literal-functions
   (testing "domain in Rⁿ, range R"
     (let [f (literal-function 'f)             ;; f : R -> R
-         g (literal-function 'g [0 0] 0)]     ;; g : R x R -> R
+          g (literal-function 'g [0 0] 0)]     ;; g : R x R -> R
      (is (= '(f x) (g/simplify (f 'x))))
      (is (= '(g x y) (g/simplify (g 'x 'y))))
      (is (thrown? IllegalArgumentException (g/simplify (f 'x 'y))))
-     (is (thrown? IllegalArgumentException (g/simplify (g 'x))))
-     ))
+     (is (thrown? IllegalArgumentException (g/simplify (g 'x))))))
+
   (testing "structured range"
     (let [h (literal-function 'h 0 (up 0 0 0))
           k (literal-function 'k 0 (up 0 (up 0 0) (down 0 0)))

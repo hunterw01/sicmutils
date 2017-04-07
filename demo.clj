@@ -51,7 +51,7 @@
   [f]
   (fn [q]
     (fn [t]
-         ((literal-function 'φ) ((f q) t)))))
+        ((literal-function 'φ) ((f q) t)))))
 
 ;; Exercise 1.7
 (def δ_η (δ (literal-function 'eta)))
@@ -76,14 +76,14 @@
 (((Lagrange-equations (L-central-rectangular 'm (literal-function 'U)))
   (up (literal-function 'x)
       (literal-function 'y)))
-  't)
+ 't)
 
 ;; p. 43
 (prn "central polar")
 (((Lagrange-equations (L-central-polar 'm (literal-function 'U)))
   (up (literal-function 'r)
       (literal-function 'φ)))
-  't)
+ 't)
 
 ;; Coordinate transformation (p. 47)
 (velocity ((F->C p->r)
@@ -96,14 +96,14 @@
 (println "alternate central polar Lagrangian")
 
 ((L-alternate-central-polar 'm (literal-function 'U))
-  (->local 't (up 'r 'φ) (up 'rdot 'φdot)))
+ (->local 't (up 'r 'φ) (up 'rdot 'φdot)))
 
 (println "alternate central polar Lagrange equations")
 
 (((Lagrange-equations (L-alternate-central-polar 'm (literal-function 'U)))
-   (up (literal-function 'r)
-       (literal-function 'φ)))
-  't)
+  (up (literal-function 'r)
+      (literal-function 'φ)))
+ 't)
 
 (println "The Simple Pendulum")
 

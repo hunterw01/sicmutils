@@ -23,8 +23,8 @@
 (deftest expressions
   (testing "variables-in"
     (is (= '#{a b c d x y * +} (variables-in '(+ x (* 3 y) [a [b 9 c] [3 4 5 d]]))))
-    (is (= '#{x} (variables-in 'x)))
-    )
+    (is (= '#{x} (variables-in 'x))))
+
   (testing "walk"
     (is (= 12 ((walk-expression {'+ + 'x 5}) '(+ 3 4 x))))
     (is (= 0 ((walk-expression {'* * '+ + 'x 5 'y -2}) '(+ 3 (* 4 y) x))))

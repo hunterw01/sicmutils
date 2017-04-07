@@ -36,13 +36,13 @@
     (let [f (constantly identity)]
       (doseq [compile? [true false true true]]
         (let [states (atom [])
-             result ((evolve f)         ;; solve: y' = y
-                     (up 1.)                               ;;        y(0) = 1
-                     #(swap! states conj [%1 %2])          ;; accumulate results
-                     0.1                                   ;; ... with step size 0.1
-                     1                                     ;; solve until t = 1
-                     1e-10                                 ;; accuracy desired
-                     :compile compile?)]
+              result ((evolve f)         ;; solve: y' = y
+                      (up 1.)                               ;;        y(0) = 1
+                      #(swap! states conj [%1 %2])          ;; accumulate results
+                      0.1                                   ;; ... with step size 0.1
+                      1                                     ;; solve until t = 1
+                      1e-10                                 ;; accuracy desired
+                      :compile compile?)]
          (is (= (count @states) 11))
          (is (near? (Math/exp 1) (first result)))))))
   (testing "y'' = -y"

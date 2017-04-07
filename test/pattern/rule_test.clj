@@ -140,8 +140,8 @@
               (* (expt (bzz (:? x)) (:? n #(> % 2)))) => (:? (subtract-from 'n -2))
               (expt (sin (:? x)) (:? n at-least-two?)) => (* (expt (sin (:? x)) (:? #(- (% 'n) 2)))
                                                              (- 1 (expt (cos (:? x)) 2))))
-          RS (rule-simplifier R)
-          ]
+          RS (rule-simplifier R)]
+
       (is (= '(b 4 3) (R '(a 3 4))))
       (is (= '(c 4 3.0) (R '(a 3.0 4))))
       (is (nil? (R '(a "foo" 4))))
@@ -155,5 +155,4 @@
     (let [R (rule (expt (:T :X) :N) => ((expt :T :N) :X))]
       (is (= '((expt sin 2) t) (R '(expt (sin t) 2))))
       (is (= '((expt cos 2) t) (R '(expt (cos t) 2))))
-      (is (= nil (R '(expt x 2)))))
-    ))
+      (is (= nil (R '(expt x 2)))))))

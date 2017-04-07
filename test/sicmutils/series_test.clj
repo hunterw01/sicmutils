@@ -31,11 +31,11 @@
 (deftest series-test
   (testing "basics"
     (let [Q (series/starting-with 4)
-         R (series/starting-with 4 3)
-         S (series/starting-with 4 3 2)
-         ones (series/generate (constantly 1))
-         nats0 (series/generate identity)
-         nats (series/generate inc)]
+          R (series/starting-with 4 3)
+          S (series/starting-with 4 3 2)
+          ones (series/generate (constantly 1))
+          nats0 (series/generate identity)
+          nats (series/generate inc)]
      (is (= '(4 0 0 0 0 0 0 0) (series/take 8 Q)))
      (is (= '(4 3 0 0 0 0 0 0) (series/take 8 R)))
      (is (= '(4 3 2 0 0 0 0 0) (series/take 8 S)))
@@ -72,7 +72,7 @@
      (is (= '(3 5 7 0 0 0 0 0)
             (series/take 8
                          (+ (series/starting-with 1 2 3)
-                              (series/starting-with 2 3 4)))))
+                            (series/starting-with 2 3 4)))))
      (is (= '(1 4 10 12 9 0 0)
             (simplify
              (series/take 7
@@ -115,13 +115,13 @@
             (simplify
              (series/take 2
                           ((* (series/starting-with 2 3)
-                                (literal-function 'f)) 'x)))))
+                              (literal-function 'f)) 'x)))))
      (is (= '((* 2 (f y)) (* 3 (f y)))
             (simplify
              (series/take 2
                           ((* (literal-function 'f)
-                                (series/starting-with 2 3)) 'y)))))
-     ))
+                              (series/starting-with 2 3)) 'y)))))))
+
 
   (let [S (series/starting-with (literal-function 'f)
                                 (literal-function 'g))

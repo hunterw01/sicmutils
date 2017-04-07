@@ -62,16 +62,16 @@
     (is (= 4 (g/square 2)))
     (is (= 4 (g/square -2)))
     (is (= 27 (g/cube 3)))
-    (is (= -27 (g/cube -3)))
-    )
+    (is (= -27 (g/cube -3))))
+
   (testing "with-symbols"
     (is (= '(+ x 4) (g/simplify (g/+ 4 'x))))
     (is (= '(+ y 5) (g/simplify (g/+ 'y 5))))
     (is (= '(/ 5 y) (g/simplify (g/divide 5 'y))))
     (is (= '(* 5 y) (g/simplify (g/* 5 'y))))
     (is (= '(/ x y) (g/simplify (g/divide 'x 'y))))
-    (is (= '(* x y) (g/simplify (g/* 'x 'y))))
-    )
+    (is (= '(* x y) (g/simplify (g/* 'x 'y)))))
+
   (testing "zero/one elimination"
     (is (= 'x (g/+ 0 'x)))
     (is (= 'x (g/* 1 'x)))
@@ -88,8 +88,8 @@
     (is (= 0 (g/divide 0 'x)))
     (is (= 0 (g/* 0 'x)))
     (is (= 0 (g/* 'x 0)))
-    (is (thrown? ArithmeticException (g/divide 'x 0)))
-    )
+    (is (thrown? ArithmeticException (g/divide 'x 0))))
+
   (testing "neg"
     (is (= '(* -1 x) (g/simplify (g/negate 'x))))
     (is (= -4 (g/- 0 4)))
@@ -106,20 +106,20 @@
     (is (v/unity? 1))
     (is (not (v/unity? 2)))
     (is (v/unity? 1.0))
-    (is (not (v/unity? 0.0)))
-    )
+    (is (not (v/unity? 0.0))))
+
   (testing "zero-like"
     (is (= 0 (v/zero-like 2)))
     (is (= 0 (v/zero-like 3.14))))
   (testing "abs"
     (is (= 1 (g/abs -1)))
     (is (= 1 (g/abs 1)))
-    (is (= '(abs x) (g/simplify (g/abs 'x))))
-    )
+    (is (= '(abs x) (g/simplify (g/abs 'x)))))
+
   (testing "sqrt"
     (is (= 9 (g/sqrt 81)))
-    (is (= '(sqrt x) (g/simplify (g/sqrt 'x))))
-    )
+    (is (= '(sqrt x) (g/simplify (g/sqrt 'x)))))
+
   (testing "expt"
     (is (= 32 (g/expt 2 5)))
     (is (= '(expt x 2) (g/simplify (g/expt 'x 2))))
@@ -131,15 +131,15 @@
     (is (= 'x (g/simplify (g/expt (g/sqrt 'x) 2))))
     (is (= '(expt x 3) (g/simplify (g/expt (g/sqrt 'x) 6))))
     (is (= '(expt x 12) (g/simplify (g/expt (g/expt 'x 4) 3))))
-    (is (= '(/ 1 (expt x 3)) (g/simplify (g/expt 'x -3))))
-    )
+    (is (= '(/ 1 (expt x 3)) (g/simplify (g/expt 'x -3)))))
+
   (testing "exp/log"
     (is (= 1.0 (g/exp 0)))
     (is (= '(exp x) (g/simplify (g/exp 'x))))
     (is (= 0.0 (g/log 1)))
     (is (= '(log x) (g/simplify (g/log 'x))))
-    (is (= 0.0 (g/log (g/exp 0))))
-    )
+    (is (= 0.0 (g/log (g/exp 0)))))
+
   (testing "quotient"
     (is (= 2 (g/quotient 5 2)))
     (is (= 2 (g/quotient 5N 2)))

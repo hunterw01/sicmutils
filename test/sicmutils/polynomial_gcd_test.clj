@@ -86,19 +86,19 @@
     (testing "GCD: arity 3 case"
       (binding [*poly-gcd-time-limit* [2 TimeUnit/SECONDS]]
         (let [I (make 3 [[[0 0 0] 1]])
-             X (make 3 [[[1 0 0] 1]])
-             Y (make 3 [[[0 1 0] 1]])
-             Z (make 3 [[[0 0 1] 1]])
-             X+Y (add X Y)
-             X+Z (add X Z)
-             Y+Z (add Y Z)
-             X+Y+Z (add X+Y Z)
-             X+1 (add X I)
-             Y+1 (add Y I)
-             Z+1 (add Z I)
-             U (reduce mul [(expt X+1 3) (expt X+Y 2) (expt Y+Z 5) (expt X+Y+Z 4) (expt Y+1 4) (expt Z+1 3)])
-             V (reduce mul [(expt X+1 2)  (expt X+Y 5) (expt Y+Z 3) (expt X+Y+Z 5) (expt Y+1 2) (expt Z+1 1) X+1])
-             G (reduce mul [(expt X+1 3) (expt X+Y 2) (expt Y+Z 3) (expt X+Y+Z 4) (expt Y+1 2) Z+1])]
+              X (make 3 [[[1 0 0] 1]])
+              Y (make 3 [[[0 1 0] 1]])
+              Z (make 3 [[[0 0 1] 1]])
+              X+Y (add X Y)
+              X+Z (add X Z)
+              Y+Z (add Y Z)
+              X+Y+Z (add X+Y Z)
+              X+1 (add X I)
+              Y+1 (add Y I)
+              Z+1 (add Z I)
+              U (reduce mul [(expt X+1 3) (expt X+Y 2) (expt Y+Z 5) (expt X+Y+Z 4) (expt Y+1 4) (expt Z+1 3)])
+              V (reduce mul [(expt X+1 2)  (expt X+Y 5) (expt Y+Z 3) (expt X+Y+Z 5) (expt Y+1 2) (expt Z+1 1) X+1])
+              G (reduce mul [(expt X+1 3) (expt X+Y 2) (expt Y+Z 3) (expt X+Y+Z 4) (expt Y+1 2) Z+1])]
          (is (= [(reduce mul [(expt Y+Z 2) (expt Y+1 2) (expt Z+1 2)]) (make 3 [])] (divide U G)))
          (is (= [(reduce mul [(expt X+Y 3) X+Y+Z]) (make 3 [])] (divide V G)))
          (is (= X+Z (gcd (mul X+Y X+Z) (mul Y+Z X+Z))))
@@ -110,15 +110,15 @@
     ;; to specify the coefficient field when we create a polynomial so that we
     ;; can efficiently dispatch to a GCD routine tailored to that field.
     #_(testing "modular polynomial reduction"
-      (let [A (make [-360 -171 145 25 1])
-            B (make [-15 -14 -1 15 14 1])
-            Z5 #(modular/make % 5)
-            A:Z5 (map-coefficients Z5 A)
-            B:Z5 (map-coefficients Z5 B)
-            G5 (gcd A:Z5 B:Z5)]
-        (is (= (make [(Z5 0) (Z5 -1) (Z5 0) (Z5 0) (Z5 1)]) A:Z5))
-        (is (= (make [(Z5 0) (Z5 1) (Z5 -1) (Z5 0) (Z5 -1) (Z5 1)]) B:Z5))
-        (is (= (make [(Z5 0) (Z5 -1) (Z5 0) (Z5 0) (Z5 1)]) G5))))))
+       (let [A (make [-360 -171 145 25 1])
+             B (make [-15 -14 -1 15 14 1])
+             Z5 #(modular/make % 5)
+             A:Z5 (map-coefficients Z5 A)
+             B:Z5 (map-coefficients Z5 B)
+             G5 (gcd A:Z5 B:Z5)]
+         (is (= (make [(Z5 0) (Z5 -1) (Z5 0) (Z5 0) (Z5 1)]) A:Z5))
+         (is (= (make [(Z5 0) (Z5 1) (Z5 -1) (Z5 0) (Z5 -1) (Z5 1)]) B:Z5))
+         (is (= (make [(Z5 0) (Z5 -1) (Z5 0) (Z5 0) (Z5 1)]) G5))))))
 
 (deftest simple-gcd-3
   (testing "GCD: arity 3 case"
@@ -377,8 +377,8 @@
           sw (Stopwatch/createStarted)
           g (binding [*poly-gcd-time-limit* [10 TimeUnit/SECONDS], *poly-gcd-debug* false]
               (gcd u v))]
-      (log/info "S1 gcd" (str g) (str sw))
-      ))
+      (log/info "S1 gcd" (str g) (str sw))))
+
   (testing "ex2"
     (let [u (make 2 {[0 0] -1, [0 7] -1})
           v (make 2 {[0 0] 1, [0 1] -1, [0 4] 1, [3 3] -11, [1 9] 8, [8 5] -9, [12 1] 1})

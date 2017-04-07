@@ -39,16 +39,16 @@
                          (H/H-rectangular
                            'm
                            (literal-function 'V (-> (X Real Real) Real))))
-                        (up (literal-function 'x) (literal-function 'y))
-                        (down (literal-function 'p_x) (literal-function 'p_y)))
-                       't)))))
+                       (up (literal-function 'x) (literal-function 'y))
+                       (down (literal-function 'p_x) (literal-function 'p_y)))
+                      't)))))
   (testing "p.198"
     (is (= '(/ (+ (* 2 m (V x y)) (expt p_x 2) (expt p_y 2))
                (* 2 m))
            (simplify ((Lagrangian->Hamiltonian
                         (L/L-rectangular
                           'm (literal-function 'V (-> (X Real Real) Real))))
-                       (up 't (up 'x 'y) (down 'p_x 'p_y))))))))
+                      (up 't (up 'x 'y) (down 'p_x 'p_y))))))))
 
 (deftest section-3-2
   (testing "p.205"
@@ -58,14 +58,14 @@
       (is (zero? (simplify ((+ (Poisson-bracket F (Poisson-bracket G H))
                                (Poisson-bracket G (Poisson-bracket H F))
                                (Poisson-bracket H (Poisson-bracket F G)))
-                             (up 't (up 'x 'y) (down 'px 'py)))))))))
+                            (up 't (up 'x 'y) (down 'px 'py)))))))))
 
 (deftest section-3-4
   (testing "p.212"
     (is (= '(/ (+ (* 2 m (expt r 2) (V r)) (* (expt p_r 2) (expt r 2)) (expt p_phi 2)) (* 2 m (expt r 2)))
            (simplify ((Lagrangian->Hamiltonian
                         (L/L-central-polar 'm (literal-function 'V)))
-                       (up 't (up 'r 'phi) (down 'p_r 'p_phi))))))
+                      (up 't (up 'r 'phi) (down 'p_r 'p_phi))))))
     (is (= '(up 0
                 (up (/ (+ (* m ((D r) t)) (* -1 (p_r t))) m)
                     (/ (+ (* m (expt (r t) 2) ((D phi) t)) (* -1 (p_phi t))) (* m (expt (r t) 2))))
@@ -74,11 +74,11 @@
            (simplify (((Hamilton-equations
                          (Lagrangian->Hamiltonian
                            (L/L-central-polar 'm (literal-function 'V))))
-                        (up (literal-function 'r)
-                            (literal-function 'phi))
-                        (down (literal-function 'p_r)
-                              (literal-function 'p_phi)))
-                       't)))))
+                       (up (literal-function 'r)
+                           (literal-function 'phi))
+                       (down (literal-function 'p_r)
+                             (literal-function 'p_phi)))
+                      't)))))
   (testing "p.213"
     (is (= '(/ (+ (* 2 A C gMR (expt (sin theta) 2) (cos theta))
                   (* A (expt p_psi 2) (expt (sin theta) 2))
@@ -88,9 +88,9 @@
                   (* C (expt p_phi 2)))
                (* 2 A C (expt (sin theta) 2)))
            (simplify ((Lagrangian->Hamiltonian (top/L-axisymmetric 'A 'C 'gMR))
-                       (up 't
-                           (up 'theta 'phi 'psi)
-                           (down 'p_theta 'p_phi 'p_psi)))))))
+                      (up 't
+                          (up 'theta 'phi 'psi)
+                          (down 'p_theta 'p_phi 'p_psi)))))))
   (testing "p.214"
     (let [top-state (up 't
                         (up 'theta 'phi 'psi)
@@ -127,7 +127,7 @@
   (testing "p.221"
     (let [H ((Lagrangian->Hamiltonian
                (driven/L 'm 'l 'g 'a 'omega))
-              (up 't 'theta 'p_theta))]
+             (up 't 'theta 'p_theta))]
       (is (= '(/ (+ (* -1 (expt a 2) (expt l 2) (expt m 2) (expt omega 2) (expt (sin (* omega t)) 2) (expt (cos theta) 2))
                     (* 2 a g (expt l 2) (expt m 2) (cos (* omega t)))
                     (* 2 a l m omega p_theta (sin (* omega t)) (sin theta))
@@ -139,7 +139,7 @@
                    ((Hamiltonian->state-derivative
                       (Lagrangian->Hamiltonian
                         (driven/L 'm 'l 'g 'a 'omega)))
-                     (up 't 'theta 'p_theta)))]
+                    (up 't 'theta 'p_theta)))]
       (is (= '(up 1
                   (/ (+ (* a l m omega (sin (* omega t)) (sin theta)) p_theta)
                      (* (expt l 2) m))

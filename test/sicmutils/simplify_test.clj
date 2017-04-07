@@ -83,8 +83,8 @@
     (is (= 1 (g/simplify (g/+ (g/expt (g/sin 'x) 2) (g/expt (g/cos 'x) 2)))))
     ;; why doesn't the following work given that the rules are meant
     ;; to pull sines to the left?
-    (is (= 1 (g/simplify (g/+ (g/expt (g/cos 'x) 2) (g/expt (g/sin 'x) 2)))))
-    ))
+    (is (= 1 (g/simplify (g/+ (g/expt (g/cos 'x) 2) (g/expt (g/sin 'x) 2)))))))
+
 
 (deftest structures
   (let [A (matrix/by-rows [1 2] [3 4])
@@ -125,7 +125,7 @@
 (deftest complex-units
   (is (= '(1 (complex 0.0 1.0) -1 (complex 0 -1) 1 (complex 0 1) -1 (complex 0 -1))
          (for [n (range 8)]
-                (simplify-expression `(~'expt (~'complex 0.0 1.0) ~n))))))
+              (simplify-expression `(~'expt (~'complex 0.0 1.0) ~n))))))
 
 (deftest string-form-test
   (is (= "(up sin cos tan)" (expression->string (s/up g/sin g/cos g/tan))))

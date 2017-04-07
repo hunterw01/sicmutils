@@ -32,9 +32,9 @@
                (* 2 m (expt r 2)))
            (simplify ((compose (H/H-central 'm (literal-function 'V))
                                (F->CT p->r))
-                       (up 't
-                           (up 'r 'phi)
-                           (down 'p_r 'p_phi))))))))
+                      (up 't
+                          (up 'r 'phi)
+                          (down 'p_r 'p_phi))))))))
 
 (deftest section-5-2
   (let [J-func (fn [[_ dh1 dh2]] (up 0 dh2 (- dh1)))
@@ -45,13 +45,13 @@
                ((compositional-canonical?
                   (F->CT p->r)
                   (H/H-central 'm (literal-function 'V)))
-                 (up 't
-                     (up 'r 'phi)
-                     (down 'p_r 'p_phi))))))
+                (up 't
+                    (up 'r 'phi)
+                    (down 'p_r 'p_phi))))))
       (is (= '(up 0 0 0)
              (simplify
                ((time-independent-canonical? (polar-canonical 'alpha))
-                 (up 't 'theta 'I)))))
+                (up 't 'theta 'I)))))
       (let [a-non-canonical-transform (fn [[t theta p]]
                                         (let [x (* p (sin theta))
                                               p_x (* p (cos theta))]
@@ -59,7 +59,7 @@
         (is (not= '(up 0 0 0)
                   (simplify
                     ((time-independent-canonical? a-non-canonical-transform)
-                      (up 't 'theta 'p))))))
+                     (up 't 'theta 'p))))))
       (is (= '(matrix-by-rows [0 0 0 0 0]
                               [0 0 0 1 0]
                               [0 0 0 0 1]
@@ -81,9 +81,9 @@
                                 [0 0 0 0 0])
                (simplify
                  ((symplectic? (F->CT p->r))
-                   (up 't
-                       (up 'r 'varphi)
-                       (down 'p_r 'p_varphi))))))))
+                  (up 't
+                      (up 'r 'varphi)
+                      (down 'p_r 'p_varphi))))))))
     (testing "symplectic"
       (is (= '(matrix-by-rows [0 0 0 0]
                               [0 0 0 0]
@@ -91,9 +91,9 @@
                               [0 0 0 0])
              (simplify
                ((symplectic-transform? (F->CT p->r))
-                 (up 't
-                     (up 'r 'theta)
-                     (down 'p_r 'p_theta)))))))
+                (up 't
+                    (up 'r 'theta)
+                    (down 'p_r 'p_theta)))))))
     (testing "rotating coordinates p. 336"
       (let [canonical-K? (fn [C K]
                            (fn [s]
@@ -120,9 +120,9 @@
                   [0 0 0 0 0 0])
                (simplify
                  ((symplectic-transform? (C-rotating 'Omega))
-                   (up 't
-                       (up 'x 'y 'z)
-                       (down 'p_x 'p_y 'p_z))))))
+                  (up 't
+                      (up 'x 'y 'z)
+                      (down 'p_x 'p_y 'p_z))))))
         ;; Note that the definition of K, above, differs from that given in
         ;; the 1st Ed. of SICM (our definition has the opposite sign). The
         ;; test below does not work if the book's definition is used. In the
@@ -132,9 +132,9 @@
         (is (= '(up 0 (up 0 0 0) (down 0 0 0))
                (simplify
                  ((canonical-K? (C-rotating 'Omega) (K 'Omega))
-                   (up 't
-                       (up 'x 'y 'z)
-                       (down 'p_x 'p_y 'p_z))))))))))
+                  (up 't
+                      (up 'x 'y 'z)
+                      (down 'p_x 'p_y 'p_z))))))))))
 
 (deftest section-5-3
   (let [omega (fn [zeta1 zeta2]
@@ -200,8 +200,8 @@
               (/ (* (expt dt 5) (expt k 2) p0) (* 120 (expt m 3))))
            (simplify (take 6 (series/->seq
                                (((Lie-transform (H-harmonic 'm 'k) 'dt)
-                                  coordinate)
-                                 (up 0 'x0 'p0)))))))
+                                 coordinate)
+                                (up 0 'x0 'p0)))))))
     (is (= '(p0
               (* -1 dt k x0)
               (/ (* -1 (expt dt 2) k p0) (* 2 m))
@@ -210,18 +210,18 @@
               (/ (* -1 (expt dt 5) (expt k 3) x0) (* 120 (expt m 2))))
            (simplify (take 6 (series/->seq
                                (((Lie-transform (H-harmonic 'm 'k) 'dt)
-                                  momentum)
-                                 (up 0 'x0 'p0)))))))
+                                 momentum)
+                                (up 0 'x0 'p0)))))))
     (is (= '((/ (+ (* k m (expt x0 2)) (expt p0 2)) (* 2 m))
-              0
+             0
               0
               0
               0
               0)
            (simplify (take 6 (series/->seq
                                (((Lie-transform (H-harmonic 'm 'k) 'dt)
-                                  (H-harmonic 'm 'k))
-                                 (up 0 'x0 'p0)))))))
+                                 (H-harmonic 'm 'k))
+                                (up 0 'x0 'p0)))))))
     (let [state (up 't
                     (up 'r_0 'phi_0)
                     (down 'p_r_0 'p_phi_0))]
@@ -229,13 +229,13 @@
                  (* 2 m (expt r_0 2)))
              (simplify ((H/H-central-polar 'm (literal-function 'U)) state))))
       (is (= '((up r_0 phi_0)
-                (up (/ (* dt p_r_0) m)
-                    (/ (* dt p_phi_0) (* m (expt r_0 2))))
-                (up (/ (+ (* -1 (expt dt 2) m (expt r_0 3) ((D U) r_0)) (* (expt dt 2) (expt p_phi_0 2))) (* 2 (expt m 2) (expt r_0 3)))
-                    (/ (* -1 (expt dt 2) p_phi_0 p_r_0) (* (expt m 2) (expt r_0 3))))
-                (up (/ (+ (* -1 (expt dt 3) m p_r_0 (expt r_0 4) (((expt D 2) U) r_0)) (* -3 (expt dt 3) (expt p_phi_0 2) p_r_0)) (* 6 (expt m 3) (expt r_0 4)))
-                    (/ (+ (* (expt dt 3) m p_phi_0 (expt r_0 3) ((D U) r_0)) (* 3 (expt dt 3) p_phi_0 (expt p_r_0 2) (expt r_0 2)) (* -1 (expt dt 3) (expt p_phi_0 3))) (* 3 (expt m 3) (expt r_0 6)))))
+               (up (/ (* dt p_r_0) m)
+                   (/ (* dt p_phi_0) (* m (expt r_0 2))))
+               (up (/ (+ (* -1 (expt dt 2) m (expt r_0 3) ((D U) r_0)) (* (expt dt 2) (expt p_phi_0 2))) (* 2 (expt m 2) (expt r_0 3)))
+                   (/ (* -1 (expt dt 2) p_phi_0 p_r_0) (* (expt m 2) (expt r_0 3))))
+               (up (/ (+ (* -1 (expt dt 3) m p_r_0 (expt r_0 4) (((expt D 2) U) r_0)) (* -3 (expt dt 3) (expt p_phi_0 2) p_r_0)) (* 6 (expt m 3) (expt r_0 4)))
+                   (/ (+ (* (expt dt 3) m p_phi_0 (expt r_0 3) ((D U) r_0)) (* 3 (expt dt 3) p_phi_0 (expt p_r_0 2) (expt r_0 2)) (* -1 (expt dt 3) (expt p_phi_0 3))) (* 3 (expt m 3) (expt r_0 6)))))
              (simplify (take 4 (series/->seq
                                  (((Lie-transform (H/H-central-polar 'm (literal-function 'U)) 'dt)
-                                    coordinate)
-                                   state)))))))))
+                                   coordinate)
+                                  state)))))))))

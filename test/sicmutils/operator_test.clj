@@ -37,13 +37,13 @@
 (deftest Operator-tests
   (testing "that our known Operators work with basic arithmetic"
     (is (every? operator? [(+ D 1)(+ 2 D)(- D 3)(- 4 D)(* 5 D)(* D 6)]))
-    (is (every? operator? [(+ (partial 0) 1)(+ 2 (partial 0))(- (partial 0) 3)(- 4 (partial 0))(* 5 (partial 0))(* (partial 0) 6)]))
-    )
+    (is (every? operator? [(+ (partial 0) 1)(+ 2 (partial 0))(- (partial 0) 3)(- 4 (partial 0))(* 5 (partial 0))(* (partial 0) 6)])))
+
   (testing "that they compose with other Operators"
     (is (every? operator? [(* D D)(* D (partial 0))(*(partial 0) D)(* (partial 0)(partial 1))])))
   (testing "that their arithmetic operations compose correctly, as per SICM -  'Our Notation'"
     (is (= (simplify (((* (+ D 1)(- D 1)) f) 'x))
-           '(+ (((expt D 2) f) x) (* -1 (f x))) )))
+           '(+ (((expt D 2) f) x) (* -1 (f x))))))
   (testing "that Operators compose correctly with functions"
     (is (= '(+ (* -1 (((expt D 2) f) x) (g x))
                (* -1 ((D f) x) ((D g) x))
@@ -76,11 +76,11 @@
     (is (= '(cos x) (simplify (((* identity-operator D) sin) 'x)))))
   (testing "exponentiation"
     (is (= '((f t)
-              (* ε ((D f) t))
-              (* 1/2 (expt ε 2) (((expt D 2) f) t))
-              (* 1/6 (expt ε 3) (((expt D 3) f) t))
-              (* 1/24 (expt ε 4) (((expt D 4) f) t))
-              (* 1/120 (expt ε 5) (((expt D 5) f) t)))
+             (* ε ((D f) t))
+             (* 1/2 (expt ε 2) (((expt D 2) f) t))
+             (* 1/6 (expt ε 3) (((expt D 3) f) t))
+             (* 1/24 (expt ε 4) (((expt D 4) f) t))
+             (* 1/120 (expt ε 5) (((expt D 5) f) t)))
            (simplify (take 6 (series/->seq
                               (((exp (* 'ε D)) (literal-function 'f)) 't))))))
     (is (= '(0

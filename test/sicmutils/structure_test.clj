@@ -39,16 +39,16 @@
       (is (= (- (up 10 10) (up 2 3) (up 3 4)) (up 5 3))))
   (testing "s +/- t mixed"
     (is (= (+ (up (down 1 2) (down 3 4))
-                (up (down 2 3) (down -7 2)))
+              (up (down 2 3) (down -7 2)))
            (up (down 3 5) (down -4 6))))
     (is (= (- (up (down 1 2) (down 3 4))
-                (up (down 2 3) (down -7 2)))
+              (up (down 2 3) (down -7 2)))
            (up (down -1 -1) (down 10 2))))
     (is (= (+ (down (up 1 2) (up 3 4))
-                (down (up 2 3) (up -7 2)))
+              (down (up 2 3) (up -7 2)))
            (down (up 3 5) (up -4 6))))
     (is (= (- (down (up 1 2) (up 3 4))
-                (down (up 2 3) (up -7 2)))
+              (down (up 2 3) (up -7 2)))
            (down (up -1 -1) (up 10 2)))))
   (testing "a*s"
     (is (= (up 2 4 6) (* 2 [1 2 3])))
@@ -76,7 +76,7 @@
     (is (= (+ 'y (* 'x 4)) (* (up 1 'x) (down 'y 4)))))
   (testing "examples from refman"
     (is (= 652 (* (up (up 2 3) (down 5 7 11))
-                    (down (down 13 17) (up 19 23 29)))))
+                  (down (down 13 17) (up 19 23 29)))))
     (is (= (up (up 10 15) (up 14 21) (up 22 33)) (* (up 2 3) (up 5 7 11))))
     (is (= (up (up 10 14 22) (up 15 21 33)) (* (up 5 7 11) (up 2 3)))))
   (testing "zero?"

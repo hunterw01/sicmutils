@@ -70,5 +70,4 @@
                             [7 8 9])]
       (is (= (matrix-by-rows [5 6]
                              [8 9])
-             (qp-submatrix A)))))
-  )
+             (qp-submatrix A))))))

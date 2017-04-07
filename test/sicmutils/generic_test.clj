@@ -52,8 +52,8 @@
     (is (= "eceoeleienrcrorlrirnicioiliiinncnonlninn" (s* "erin" "colin"))))
   (testing "add"
     (is (= "foobar" (s+ "foo" "bar")))
-    (is (= "zzz" (s+ "" "zzz")))
-    ))
+    (is (= "zzz" (s+ "" "zzz")))))
+
 
 (deftest generic-plus
   (testing "simple"

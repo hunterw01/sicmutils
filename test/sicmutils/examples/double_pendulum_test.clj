@@ -71,7 +71,7 @@
 (deftest infix-forms
   (let [eq (simplify
              ((double/state-derivative 'm1 'm2 'l1 'l2 'g)
-               (up 't (up 'theta 'phi) (up 'thetadot 'phidot))))]
+              (up 't (up 'theta 'phi) (up 'thetadot 'phidot))))]
     (is (= (str "function(t, theta, phi, thetadot, phidot) {\n"
                 "  var _0002 = Math.pow(phidot, 2);\n"
                 "  var _0003 = Math.sin(phi);\n"

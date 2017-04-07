@@ -34,8 +34,8 @@
       (is (= (f 3) 5))
       (is (= (f 4) 1)))
     (let [f (Lagrange-interpolation-function '[a b c] '[w x y])]
-      (is (= 'a (simplify (f 'w)))))
-    ))
+      (is (= 'a (simplify (f 'w)))))))
+
 
 (deftest gamma-test
   (with-literal-functions [q]
@@ -63,10 +63,10 @@
   (testing "basics"
     (with-literal-functions [q x y z]
       (let [Le (Lagrange-equations (L/L-free-particle 'm))
-           literal-path q
-           generic-path (up x y z)
-           LeQ (Le literal-path)
-           LeP (Le generic-path)]
+            literal-path q
+            generic-path (up x y z)
+            LeQ (Le literal-path)
+            LeP (Le generic-path)]
        (is (= '(* m (((expt D 2) q) t))
               (simplify (LeQ 't))))
        (is (= '(down (* m (((expt D 2) x) t))
@@ -113,5 +113,4 @@
       (is (= '(up (+ (* -1 r φdot (sin φ)) (* rdot (cos φ)))
                   (+ (* r φdot (cos φ)) (* rdot (sin φ))))
              (simplify (velocity ((F->C p->r)
-                                  (->local 't (up 'r 'φ) (up 'rdot 'φdot))))))))
-    ))
+                                  (->local 't (up 'r 'φ) (up 'rdot 'φdot))))))))))

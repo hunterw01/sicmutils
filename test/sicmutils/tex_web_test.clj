@@ -47,8 +47,8 @@
                                            (up 'x 'y)
                                            (up 'dx 'dy)))))]
 
-            ["dcot" (simplify ((D (/ tan)) 'x))]
-            ]]
+            ["dcot" (simplify ((D (/ tan)) 'x))]]]
+
        (let [t (->TeX eqn)]
          [:div
           [:h3 name]
