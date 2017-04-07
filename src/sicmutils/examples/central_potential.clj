@@ -94,11 +94,11 @@
     ;;[:circle {:fill "green" :stroke "none" :r 5 :cx 20 :cy 0}]
     ;;[:circle {:fill "green" :stroke "none" :r 5 :cx 0 :cy 20}]
     (for [[_ x y _ _] evolution]
-      [:circle {:fill "orange" :stroke "none" :r 1 :cx x :cy y}]
-      )
+      [:circle {:fill "orange" :stroke "none" :r 1 :cx x :cy y}])
+
     (for [[_ _ _ X Y] evolution]
-      [:circle {:fill "green" :stroke "none" :r 1 :cx X :cy Y}]
-      )]])
+      [:circle {:fill "green" :stroke "none" :r 1 :cx X :cy Y}])]])
+
 
 ;; Simó's initial data
 ;; x_1=−x2=0.97000436−0.24308753i,x3=0; V~ = ˙x3=−2 ˙x_1=−2 ˙x2=−0.93240737−0.86473146i

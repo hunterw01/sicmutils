@@ -171,9 +171,9 @@
     (throw (IllegalArgumentException. "matrix and tuple incompatible for multiplication")))
   (apply s/up
          (core-map (fn [i]
-                (reduce g/+ (for [k (range c)]
-                              (g/* (core-get-in v [i k])
-                                   (get u k)))))
+                    (reduce g/+ (for [k (range c)]
+                                  (g/* (core-get-in v [i k])
+                                       (get u k)))))
                    (range r))))
 
 (defn ^:private d*M
@@ -185,8 +185,8 @@
          (core-map (fn [i]
                      (reduce g/+ (for [k (range r)]
                                    (g/* (get d k)
-                                        (core-get-in v [i k])
-                                        ))))
+                                        (core-get-in v [i k])))))
+
                    (range c))))
 
 (defn ^:private kronecker
@@ -214,7 +214,7 @@
   [{r :r c :c v :v} i j]
   (Matrix. (dec r) (dec c)
            (mapv #(vector-disj % j)
-                 (vector-disj v i))) )
+                 (vector-disj v i))))
 
 (defn ^:private checkerboard-negate
   [s i j]

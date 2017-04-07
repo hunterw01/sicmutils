@@ -231,9 +231,9 @@
    'invert invert
    'expt g/expt
    'square square
-   'cube cube
+   'cube cube})
    ;;`'g/gcd gcd
-   })
+
 
 (def operators-known (set (keys operator-table)))
 
@@ -301,7 +301,7 @@
         a (.arity r)]
     (cond (v/nullity? p) 0
           (v/unity? p) r
-          :else (let [d (gcd v p) ]
+          :else (let [d (gcd v p)]
                   (if (v/unity? d)
                     (make-reduced a (p/mul u p) v)
                     (make-reduced a (p/mul u (p/evenly-divide p d)) (p/evenly-divide v d)))))))
@@ -315,7 +315,7 @@
         a (.arity r)]
     (cond (v/nullity? p) 0
           (v/unity? p) r
-          :else (let [d (gcd p v) ]
+          :else (let [d (gcd p v)]
                   (if (v/unity? d)
                     (RationalFunction. a (p/mul p u) v)
                     (RationalFunction. a (p/mul (p/evenly-divide p d) u) (p/evenly-divide v d)))))))

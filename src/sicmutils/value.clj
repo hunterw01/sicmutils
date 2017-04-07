@@ -98,28 +98,28 @@
                                          "invoke" [:invoke (alength (.getParameterTypes m))]
                                          "doInvoke" [:doInvoke true]
                                          "getRequiredArity" [:getRequiredArity (.getRequiredArity rest-fn)])))]
-                 (cond
+          (cond
                    ;; Rule one: if all we have is one single case of invoke, then the
                    ;; arity is the arity of that method. This is the common case.
-                   (and (= 1 (count facts))
-                        (= 1 (count (:invoke facts))))
-                   [:exactly (second (first (:invoke facts)))]
+            (and (= 1 (count facts))
+                 (= 1 (count (:invoke facts))))
+            [:exactly (second (first (:invoke facts)))]
                    ;; Rule two: if we have exactly one doInvoke and getRequiredArity,
                    ;; and possibly an invokeStatic, then the arity at
                    ;; least the result of .getRequiredArity.
-                   (and (= 2 (count facts))
-                        (= 1 (count (:doInvoke facts)))
-                        (= 1 (count (:getRequiredArity facts))))
-                   [:at-least (second (first (:getRequiredArity facts)))]
+            (and (= 2 (count facts))
+                 (= 1 (count (:doInvoke facts)))
+                 (= 1 (count (:getRequiredArity facts))))
+            [:at-least (second (first (:getRequiredArity facts)))]
                    ;; Rule three: if we have invokes for the arities 0..3, getRequiredArity
                    ;; says 3, and we have doInvoke, then we consider that this function
                    ;; was probably produced by Clojure's core "comp" function, and
                    ;; we somewhat lamely consider the arity of the composed function 1.
-                   (and (= #{0 1 2 3} (into #{} (map second (:invoke facts))))
-                        (= 3 (second (first (:getRequiredArity facts))))
-                        (:doInvoke facts))
-                   [:exactly 1]
-                   :else (throw (IllegalArgumentException. (str "arity? " f " " facts))))))))
+            (and (= #{0 1 2 3} (into #{} (map second (:invoke facts))))
+                 (= 3 (second (first (:getRequiredArity facts))))
+                 (:doInvoke facts))
+            [:exactly 1]
+            :else (throw (IllegalArgumentException. (str "arity? " f " " facts))))))))
 
 (defn arity
   "Return the cached or obvious arity of the object if we know it.

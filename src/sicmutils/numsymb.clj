@@ -83,13 +83,13 @@
         (number? a) (cond (v/nullity? a) a
                           (v/unity? a) b
                           (product? b) `(~'* ~a ~@(operands b))
-                          :else `(~'* ~a ~b)
-                          )
+                          :else `(~'* ~a ~b))
+
         (number? b) (cond (v/nullity? b) b
                           (v/unity? b) a
                           (product? a) `(~'* ~@(operands a) ~b)
-                          :else `(~'* ~a ~b)
-                          )
+                          :else `(~'* ~a ~b))
+
         (product? a) (cond (product? b) `(~'* ~@(operands a) ~@(operands b))
                            :else `(~'* ~@(operands a) ~b))
         (product? b) `(~'* ~a ~@(operands b))
@@ -197,13 +197,13 @@
                             (n:pi-over-4-mod-pi? x) 1.
                             (n:-pi-over-4-mod-pi? x) -1.
                             (n:pi-over-2-mod-pi? x)
-                              (throw (IllegalArgumentException. "Undefined: tan"))
+                            (throw (IllegalArgumentException. "Undefined: tan"))
                             :else `(~'tan ~x)))
         (symbol? x) (cond (symb:zero-mod-pi? x) 0
                           (symb:pi-over-4-mod-pi? x) 1
                           (symb:-pi-over-4-mod-pi? x) -1
                           (symb:pi-over-2-mod-pi? x)
-                            (throw (IllegalArgumentException. "Undefined: tan"))
+                          (throw (IllegalArgumentException. "Undefined: tan"))
                           :else `(~'tan ~x))
         :else `(~'tan ~x)))
 

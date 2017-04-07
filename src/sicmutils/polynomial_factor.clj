@@ -130,5 +130,5 @@
   [expr]
   (w/prewalk
    (fn [t]
-     (if (and (seq? t) (= (operator t) 'sqrt)) (process-sqrt t) t ))
+     (if (and (seq? t) (= (operator t) 'sqrt)) (process-sqrt t) t))
    expr))

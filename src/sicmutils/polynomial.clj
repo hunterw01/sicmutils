@@ -372,8 +372,8 @@
             (str "can't raise poly to " n))))
   (cond (v/unity? p) p
         (v/nullity? p) (if (zero? n)
-                      (throw (ArithmeticException. "poly 0^0"))
-                      p)
+                        (throw (ArithmeticException. "poly 0^0"))
+                        p)
         (zero? n) (make-constant (.arity p) 1)
         :else (loop [x p c n a (make-constant (.arity p) 1)]
                 (if (zero? c) a
@@ -447,9 +447,9 @@
    'negate negate
    'expt g/expt
    'square #(mul % %)
-   'cube #(mul % (mul % %))
+   'cube #(mul % (mul % %))})
    ;;`'g/gcd gcd
-   })
+
 
 (def operators-known (set (keys operator-table)))
 

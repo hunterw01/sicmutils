@@ -26,8 +26,8 @@
   (let [state-history (atom [])
         L (Euler-state->L-space A B C)]
     ((evolve rigid-sysder
-             A B C                                                ;; moments of inertia
-             )
+             A B C)                                                ;; moments of inertia
+
      (up 0.0
          (up θ0 φ0 ψ0)
          (up θdot0 φdot0 ψdot0))

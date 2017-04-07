@@ -228,8 +228,8 @@
    "tan" "\\tan",
    "asin" "\\arcsin",
    "acos" "\\arccos",
-   "atan" "\\arctan",
-   })
+   "atan" "\\arctan",})
+
 
 (defn ^:private brace
   "Wrap the argument, as a string, in braces"
